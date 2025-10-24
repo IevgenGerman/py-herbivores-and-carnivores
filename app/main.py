@@ -4,10 +4,13 @@ class Animal:
     def __init__(self, name: str,
                  health: int = 100,
                  hidden: bool = False):
+        if len(Animal.alive) > 0 and all(not isinstance(a, Animal) for a in Animal.alive):
+            Animal.alive.clear()
+
         self.name = name
         self.health = health
         self.hidden = hidden
-        if self.health > 0 and self not in Animal.alive:
+        if self.health > 0:
             Animal.alive.append(self)
 
     def change_health(self, delta_health: int) -> None:
