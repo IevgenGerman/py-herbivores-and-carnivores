@@ -1,5 +1,5 @@
 class Animal:
-    alive = []
+    alive: list["Animal"] = []
 
     def __init__(self, name: str,
                  health: int = 100,
@@ -14,16 +14,13 @@ class Animal:
             Animal.alive.append(self)
 
     def change_health(self, delta_health: int) -> None:
-            self.health += delta_health
-            if self.health <= 0:
-                Animal.alive.remove(self)
+            if isinstance(delta_health, int):
+                self.health += delta_health
+                if self.health <= 0:
+                    Animal.alive.remove(self)
 
-    def __iadd__(self, other: int) -> "Animal":
-        if isinstance(other, int):
-            self.change_health(other)
-            return self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{{Name: {self.name}, Health: {self.health}, Hidden: {self.hidden}}}"
 
 
@@ -36,15 +33,10 @@ class Carnivore(Animal):
 
     @staticmethod
     def bite(herbivore: Herbivore) -> None:
-        if isinstance(herbivore, Herbivore) and not herbivore.hidden:
-            herbivore.change_health(-50)
-
-    def __isub__(self, other: int) -> "Animal":
-        if isinstance(other, int):
-            self.change_health(-other)
-            return self
-
-
+        if isinstance(herbivore, Animal) and not herbivore.hidden:
+            if isinstance(herbivore, Carnivore):
+                pass
+        herbivore.health -=50
 
 snake = Carnivore("snake")
 
@@ -53,6 +45,7 @@ rabbit = Herbivore("rabbit")
 print(rabbit.hidden)
 rabbit.hide()
 print(rabbit.hidden)
+rabbit.hide()
 print("alive now:", Animal.alive)
 print(rabbit.health)
 snake.bite(rabbit)
