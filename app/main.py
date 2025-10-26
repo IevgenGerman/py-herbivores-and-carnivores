@@ -3,8 +3,9 @@ class Animal:
 
     def __init__(self, name: str,
                  health: int = 100,
-                 hidden: bool = False):
-        if len(Animal.alive) > 0 and all(not isinstance(a, Animal) for a in Animal.alive):
+                 hidden: bool = False) -> None:
+        if (len(Animal.alive) > 0 and
+                all(not isinstance(a, Animal) for a in Animal.alive)):
             Animal.alive.clear()
 
         self.name = name
@@ -14,14 +15,15 @@ class Animal:
             Animal.alive.append(self)
 
     def change_health(self, delta_health: int) -> None:
-            if isinstance(delta_health, int):
-                self.health += delta_health
-                if self.health <= 0:
-                    Animal.alive.remove(self)
-
+        if isinstance(delta_health, int):
+            self.health += delta_health
+            if self.health <= 0:
+                Animal.alive.remove(self)
 
     def __repr__(self) -> str:
-        return f"{{Name: {self.name}, Health: {self.health}, Hidden: {self.hidden}}}"
+        return (f"{{Name: {self.name}, "
+                f"Health: {self.health}, "
+                f"Hidden: {self.hidden}}}")
 
 
 class Herbivore(Animal):
@@ -37,19 +39,4 @@ class Carnivore(Animal):
             if isinstance(herbivore, Carnivore):
                 pass
             else:
-                herbivore.health -=50
-
-snake = Carnivore("snake")
-
-cat = Carnivore("cat")
-rabbit = Herbivore("rabbit")
-print(rabbit.hidden)
-rabbit.hide()
-print(rabbit.hidden)
-rabbit.hide()
-print("alive now:", Animal.alive)
-print(rabbit.health)
-snake.bite(rabbit)
-snake.bite(cat)
-print(rabbit.health)
-print(cat.health)
+                herbivore.change_health(-50)
