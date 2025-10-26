@@ -32,11 +32,12 @@ class Herbivore(Animal):
 class Carnivore(Animal):
 
     @staticmethod
-    def bite(herbivore: Herbivore) -> None:
+    def bite(herbivore: Animal) -> None:
         if isinstance(herbivore, Animal) and not herbivore.hidden:
             if isinstance(herbivore, Carnivore):
                 pass
-        herbivore.health -=50
+            else:
+                herbivore.health -=50
 
 snake = Carnivore("snake")
 
@@ -49,5 +50,6 @@ rabbit.hide()
 print("alive now:", Animal.alive)
 print(rabbit.health)
 snake.bite(rabbit)
-
+snake.bite(cat)
 print(rabbit.health)
+print(cat.health)
