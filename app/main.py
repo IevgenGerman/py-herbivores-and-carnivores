@@ -4,8 +4,7 @@ class Animal:
     def __init__(self, name: str,
                  health: int = 100,
                  hidden: bool = False) -> None:
-        if (len(Animal.alive) > 0 and
-                all(not isinstance(a, Animal) for a in Animal.alive)):
+        if (len(Animal.alive) > 0 and all(not isinstance(a, Animal) for a in Animal.alive)):
             Animal.alive.clear()
 
         self.name = name
@@ -32,7 +31,6 @@ class Herbivore(Animal):
 
 
 class Carnivore(Animal):
-
     @staticmethod
     def bite(herbivore: Animal) -> None:
         if isinstance(herbivore, Animal) and not herbivore.hidden:
