@@ -4,8 +4,9 @@ class Animal:
     def __init__(self, name: str,
                  health: int = 100,
                  hidden: bool = False) -> None:
-        if (len(Animal.alive) > 0 and all(not isinstance(a, Animal) for a in Animal.alive)):
-            Animal.alive.clear()
+        if len(Animal.alive) > 0:
+            if all(not isinstance(a, Animal) for a in Animal.alive):
+                Animal.alive.clear()
 
         self.name = name
         self.health = health
